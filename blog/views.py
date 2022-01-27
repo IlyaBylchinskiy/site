@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from taggit.models import Tag
 from django.db.models import Count
 from django.views.generic.edit import CreateView
@@ -10,9 +10,8 @@ from .forms import EmailPostForm, CommentForm
 from .models import Post
 
 
-def post_detail(request, year, month, day, post):
-    post = get_object_or_404(Post, slug=post, status='published', publish__year=year, publish__month=month,
-                             publish__day=day)
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
     comments = post.comments.filter(active=True)
     new_comment = None
     if request.method == 'POST':
@@ -27,8 +26,7 @@ def post_detail(request, year, month, day, post):
         similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
         similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
     return render(request, 'blog/post/detail.html',
-                  {'post': post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form,
-                   'similar_posts': similar_posts})
+                  {'post': post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
 
 
 def post_list(request, tag_slug=None):
@@ -76,5 +74,10 @@ def post_share(request, post_id):
 
 class BlogCreateView(CreateView):
     model = Post
-    template_name = 'post_new.html'
+    template_name = 'blog/post_new.html'
     fields = ['title', 'author', 'body']
+
+
+class BlogDetailView(DetailView):
+    model = Post
+    template_name = 'detail.html'
