@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import BlogCreateView
+from .views import BlogCreateView, ShowProfilePageView, CreateProfilePageView
 
 app_name = 'blog'
 
@@ -11,4 +11,6 @@ urlpatterns = [
     path('<int:post_id>/share/', views.post_share, name='post_share'),
     path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
     path('post/new/', BlogCreateView.as_view(), name='post_new'),
+    path('user_profile/<int:pk>/', ShowProfilePageView.as_view(), name='user_profile'),
+    path('create_profile_page/', CreateProfilePageView.as_view(), name='create_user_profile'),
 ]
