@@ -18,6 +18,7 @@
         <p>You are not logged in.</p>
         <a href="{% url 'login' %}">Log In</a>
         <a href="{% url 'signup' %}">Sign Up</a>
+        <a href="{% url 'post_new' %}">+ New Blog Post</a>
       {% endif %}
   <h2>My blog</h2>
   <p>This is my blog. I've written {% total_posts %} posts so far.</p>
