@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from taggit.models import Tag
 from django.db.models import Count
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .forms import EmailPostForm, CommentForm
 from .models import Post
@@ -81,3 +81,9 @@ class BlogCreateView(CreateView):
 class BlogDetailView(DetailView):
     model = Post
     template_name = 'detail.html'
+
+
+class BlogUpdateView(UpdateView):
+    model = Post
+    template_name = 'blog/post_edit.html'
+    fields = ['title', 'body']

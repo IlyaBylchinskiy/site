@@ -3,7 +3,10 @@
 <html>
 <head>
  <title>{% block title %}{% endblock %}</title>
- <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href='//fonts.googleapis.com/css?family=SplineSans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 <body>
  <div id="content">
@@ -11,10 +14,10 @@
       {% endblock %}
     </div>
  <div id="sidebar">
-     <a href="{% url 'blog:post_new' %}">+ New Blog Post</a>
   {% if user.is_authenticated %}
-        <p>Hi {{ user.username }}!</p>
-        <p><a href="{% url 'logout' %}">Log out</a></p>
+        <h2><p>Hi {{ user.username }}!</p></h2>
+        <h3><a href="{% url 'blog:post_new' %}">+ New Blog Post</a></h3>
+        <h4><a href="{% url 'logout' %}">Log out</a></h4>
       {% else %}
         <p>You are not logged in.</p>
         <a href="{% url 'login' %}">Log In</a>
