@@ -133,3 +133,6 @@ EMAIL_HOST_PASSWORD = 'Ilya100103gtr'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'ilya.bylchinskiy@gmail.com'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
