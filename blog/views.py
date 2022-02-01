@@ -1,16 +1,12 @@
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
-<<<<<<< HEAD
-from django.views.generic.edit import CreateView, UpdateView
-=======
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from taggit.models import Tag
->>>>>>> 67a74e8b2cee2fc317ce074a485801540a8e1eb2
 
 from .forms import EmailPostForm, CommentForm
 from .models import Post, Profile
@@ -35,7 +31,7 @@ class ShowProfilePageView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         users = Profile.objects.all()
-        context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
+        context = super(ShowProfilePageView, self).get_context_data(**kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context['page_user'] = page_user
         return context
@@ -118,3 +114,9 @@ class BlogUpdateView(UpdateView):
     model = Post
     template_name = 'blog/post_edit.html'
     fields = ['title', 'body']
+
+
+class BlogDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('home')
